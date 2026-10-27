@@ -1,0 +1,3 @@
+Files keep data after a program ends.
+A with block closes the file automatically.
+Reading line by line works well for records.

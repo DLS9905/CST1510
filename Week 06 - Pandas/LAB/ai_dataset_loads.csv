@@ -1,0 +1,7 @@
+dataset,rows_loaded,rows_expected
+training_images,9850,10000
+validation_images,5000,5000
+test_images,4380,4500
+sentiment_reviews,12000,12000
+fraud_transactions,7420,8000
+speech_commands,2990,3000

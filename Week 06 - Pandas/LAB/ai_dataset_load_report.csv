@@ -1,0 +1,7 @@
+dataset,rows_loaded,rows_expected,percent,status
+training_images,9850,10000,98.5,WARNING
+validation_images,5000,5000,100.0,OVER LIMIT
+test_images,4380,4500,97.33333333333334,WARNING
+sentiment_reviews,12000,12000,100.0,OVER LIMIT
+fraud_transactions,7420,8000,92.75,WARNING
+speech_commands,2990,3000,99.66666666666667,WARNING

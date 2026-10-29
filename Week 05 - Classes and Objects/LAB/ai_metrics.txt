@@ -1,0 +1,4 @@
+validation_loss,0.18,0.20
+accuracy_error_percent,7.5,10
+inference_latency_ms,94,100
+training_memory_gb,15.2,16

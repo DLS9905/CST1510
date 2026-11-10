@@ -1,14 +1,14 @@
-"""Load records, calculate their statuses, and save the results."""
+"""Load AI model metrics, calculate statuses, and save the results."""
 
 from pathlib import Path
 
 
-def check_record(value, limit):
-    """Return the free amount, percentage used, and status."""
-    difference = limit - value
-    percent = (value / limit) * 100
+def check_record(value, target):
+    """Return the difference from target, percentage, and status."""
+    difference = value - target
+    percent = (value / target) * 100
     if percent >= 100:
-        status = "OVER LIMIT"
+        status = "OVER TARGET"
     elif percent >= 90:
         status = "WARNING"
     else:
@@ -16,16 +16,16 @@ def check_record(value, limit):
     return difference, percent, status
 
 
-def print_report(label, value, limit, difference, percent, status):
-    """Print a bordered report for one record."""
+def print_report(label, value, target, difference, percent, status):
+    """Print a bordered report for one AI metric."""
     print()
     print("=" * 34)
     print(f"  RECORD CHECK  -  {label}")
     print("=" * 34)
-    print(f"  Used        : {value:>10.2f}")
-    print(f"  Total       : {limit:>10.2f}")
-    print(f"  Free        : {difference:>10.2f}")
-    print(f"  Percent     : {percent:>10.2f} %")
+    print(f"  Measured    : {value:>10.2f}")
+    print(f"  Target      : {target:>10.2f}")
+    print(f"  Difference  : {difference:>+10.2f}")
+    print(f"  Relative    : {percent:>10.2f} %")
     print(f"  Status      : {status:>10}")
     print("=" * 34)
 
@@ -36,9 +36,9 @@ def load_records(path):
     with open(path) as file:
         for line in file:
             if line.strip():
-                label, value, limit = line.strip().split(",")
+                label, value, target = line.strip().split(",")
                 records.append(
-                    {"label": label, "value": float(value), "limit": float(limit)}
+                    {"label": label, "value": float(value), "target": float(target)}
                 )
     return records
 
@@ -53,17 +53,17 @@ except FileNotFoundError:
 over_limit_count = 0
 with open(lab_folder / "results.txt", "w") as results_file:
     for record in records:
-        difference, percent, status = check_record(record["value"], record["limit"])
+        difference, percent, status = check_record(record["value"], record["target"])
         print_report(
             record["label"],
             record["value"],
-            record["limit"],
+            record["target"],
             difference,
             percent,
             status,
         )
         results_file.write(f"{record['label']},{status}\n")
-        if status == "OVER LIMIT":
+        if status == "OVER TARGET":
             over_limit_count += 1
 
-print(f"OVER LIMIT records: {over_limit_count}")
+print(f"OVER TARGET metrics: {over_limit_count}")

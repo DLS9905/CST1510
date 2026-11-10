@@ -1,5 +1,7 @@
 """AI model monitoring report using classes and objects."""
 
+from pathlib import Path
+
 # ====================================================================== CLASS
 # 1. Define a class called Record.
 #
@@ -57,7 +59,7 @@ def load_records(path):
 #                lines from a file and returns a list of Record objects. Make
 #                your own data file, one record per line.
 
-records = load_records("ai_metrics.txt")
+records = load_records(Path(__file__).with_name("ai_metrics.txt"))
 
 
 # ==================================================================== OUTPUT

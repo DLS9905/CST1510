@@ -1,66 +1,34 @@
-"""
-RECORD CHECK  -  my version
-===========================
+"""Classify AI model confidence scores against a target threshold."""
 
-Name  :
-Lane  :  AI / Cyber / IT      (delete two)
-Date  :
+over_target_count = 0
 
-Run it:   python template.py
+while True:
+    model_name = input("Model name (or 'quit' to finish): ").strip()
+    if model_name.lower() == "quit":
+        break
 
-Work through the numbered sections in order. Each one tells you what it must do.
-Delete these instructions as you replace them with your code.
-"""
+    confidence = float(input("Confidence score (%): "))
+    target = float(input("Target score (%): "))
+    difference = confidence - target
+    percent = (confidence / target) * 100
 
-# ==================================================================== INPUT
-# 1. Ask for your three values.
-#
-#    - the first is TEXT      (a name, a hostname, an IP)  -> no conversion needed
-#    - the second is a NUMBER (use float(), not int())
-#    - the third  is a NUMBER (use float(), not int())
+    if percent >= 100:
+        status = "OVER TARGET"
+        over_target_count += 1
+    elif percent >= 90:
+        status = "WARNING"
+    else:
+        status = "BELOW TARGET"
 
-label = ""      # replace with an input() call
-value = 0.0     # replace with an input() call, converted with float()
-limit = 0.0     # replace with an input() call, converted with float()
+    print()
+    print("=" * 42)
+    print(f"  AI CONFIDENCE CHECK - {model_name}")
+    print("=" * 42)
+    print(f"  Confidence : {confidence:>10.2f} %")
+    print(f"  Target     : {target:>10.2f} %")
+    print(f"  Difference : {difference:>+10.2f} points")
+    print(f"  Relative   : {percent:>10.2f} %")
+    print(f"  Status     : {status}")
+    print("=" * 42)
 
-
-# ================================================================== PROCESS
-# 2. Work out the difference and the percentage.       [Typical and above]
-
-difference = 0.0   # replace with your calculation
-percent = 0.0       # replace with your calculation
-# 3. Decide a status and store it in a variable called status.
-#
-#    Threshold : if / else        -> "OVER LIMIT" or "OK"
-#    Typical   : if / elif / else -> "OVER LIMIT" (100% or more),
-#                                     "WARNING" (90% or more), otherwise "OK"
-
-status = ""   # replace with your if / else (or if / elif / else)
-
-
-# =================================================================== OUTPUT
-# 4. Print the report.
-#
-#    Threshold : the three values you were given, plus status, inside a border
-#    Typical   : add difference and percent, 2 decimal places, right-aligned
-#    Excellent : wrap sections 1-4 in a loop so you can check as many records
-#                as you like in one run - type "quit" as the label to stop.
-#                Keep count of how many came back OVER LIMIT and print that
-#                once, after the loop ends.
-
-print()
-print("=" * 34)
-print(f"  RECORD CHECK  -  {label}")
-print("=" * 34)
-
-# your report lines go here
-
-print("=" * 34)
-
-
-# ==========================================================================
-# 5. Before you finish:
-#
-#    [ ] Run it three times with different numbers
-#    [ ] Run it with a total of 0 and note the error (do not fix it yet)
-#    [ ] Check every variable name says what it holds
+print(f"Models over target: {over_target_count}")

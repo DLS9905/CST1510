@@ -6,7 +6,10 @@ import matplotlib.pyplot as plt
 # ==================================================================== LOAD
 # 1. Read the AI dataset-ingestion data.
 
-df = pd.read_csv("ai_dataset_loads.csv")
+from pathlib import Path
+
+lab_folder = Path(__file__).resolve().parent
+df = pd.read_csv(lab_folder / "ai_dataset_loads.csv")
 
 
 # ================================================================= PROCESS
@@ -33,7 +36,7 @@ print("\nRows needing attention:")
 print(df[df["status"] != "OK"])
 print("\nCounts by status:")
 print(df["status"].value_counts())
-df.to_csv("ai_dataset_load_report.csv", index=False)
+df.to_csv(lab_folder / "ai_dataset_load_report.csv", index=False)
 
 df["status"].value_counts().plot(
     kind="bar",
@@ -42,8 +45,7 @@ df["status"].value_counts().plot(
     ylabel="Number of datasets",
 )
 plt.tight_layout()
-plt.savefig("ai_dataset_load_status.png")
-plt.show()
+plt.savefig(lab_folder / "ai_dataset_load_status.png")
 
 
 # ==========================================================================
